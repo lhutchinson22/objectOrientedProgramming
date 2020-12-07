@@ -33,3 +33,29 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+// inquirer
+//   .prompt([
+//     {
+//       type: "input",
+//       message: "what is your project name?",
+//       name: "namInput",
+//     },
+//     {
+//       type: "list",
+//       message: "choose a job title",
+//       name: "jobTitleInput",
+//       choices: [
+//         "engineer",
+//         "manager",
+//         "intern",
+//       ],
+//     },
+//   ])
+//   .then((res) => {
+//     console.log(res);
+
+//     fs.writeFile("main.html", html, (err) =>
+//       err ? console.error(err) : console.log("Success!")
+//     );
+//   });
