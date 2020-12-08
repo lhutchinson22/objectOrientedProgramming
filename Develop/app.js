@@ -34,28 +34,59 @@ const render = require("./lib/htmlRenderer");
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-// inquirer
-//   .prompt([
-//     {
-//       type: "input",
-//       message: "what is your project name?",
-//       name: "namInput",
-//     },
-//     {
-//       type: "list",
-//       message: "choose a job title",
-//       name: "jobTitleInput",
-//       choices: [
-//         "engineer",
-//         "manager",
-//         "intern",
-//       ],
-//     },
-//   ])
-//   .then((res) => {
-//     console.log(res);
+inquirer
+  .prompt([
+    {
+      type: "input",
+      message: "what is your name?",
+      name: "nameInput",
+    },
+    {
+      type: "list",
+      message: "choose a job title",
+      name: "jobTitleInput",
+      choices: [
+        "engineer",
+        "manager",
+        "intern",
+      ],
+    },
+
+  ])
+  .then((res) => {
+    console.log(res);
+
+    //employee array
+    let employees = []
+    let titleQuestion = "";
+
+    if (res.jobTitleInput === "engineer"){
+        titleQuestion = "what is your github profile?";
+        employees.push(res.jobTitleInput);
+    } else if (res.jobTitleInput === "manager"){
+        titleQuestion = "what is your  office number?";
+         employees.push(res.jobTitleInput);
+    } else if (res.jobTitleInput === "intern"){
+        titleQuestion = "what is your school?";
+    employees.push(res.jobTitleInput)}
+
+    inquirer
+        .prompt([
+            {
+                name: "titleInput",
+                type: "input",
+                message: titleQuestion
+            }
+        ])
+    .then((res2) => {
+        console.log(res2);
+    });
+
+    console.log(employees)
+
+
 
 //     fs.writeFile("main.html", html, (err) =>
 //       err ? console.error(err) : console.log("Success!")
 //     );
-//   });
+  });
