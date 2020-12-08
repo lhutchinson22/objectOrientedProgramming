@@ -34,6 +34,11 @@ const render = require("./lib/htmlRenderer");
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
+
+//employees array
+let employees = [];
+function inputEmployee (){
+
 inquirer
   .prompt([
     {
@@ -56,8 +61,6 @@ inquirer
   .then((res) => {
     console.log(res);
 
-    //employees array
-    let employees = [];
     let titleQuestion = "";
 
     let employee_name = "";
@@ -97,14 +100,40 @@ inquirer
         employees.push(`{name: ${employee_name}, title: ${employee_title}, titleInput: ${employee_titleInput}}`)
         console.log(employees)
         // console.log(employee_name, employee_title, employee_titleInput);
-    });
-
-
-
-
+    })
+    .then((ask) =>{
+        askAgain();
+    })
 
     // fs.writeFile("main.html", html, (err) =>
     //   err ? console.error(err) : console.log("Success!")
     // );
 
 });
+}
+
+//add more employees
+function askAgain (){
+
+    inquirer
+    .prompt([
+        {
+        type: "confirm",
+        message: "add more employees?",
+        name: "confirmEmployee",
+        default: true
+        }])
+        .then((res3) => {
+            console.log(res3)
+
+            if (res3.confirmEmployee === true){
+                inputEmployee();
+            } else {
+                console.log("no more employees!")
+            }
+        })
+
+    }
+
+inputEmployee();
+
