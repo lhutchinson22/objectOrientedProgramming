@@ -37,7 +37,11 @@ const render = require("./lib/htmlRenderer");
 
 //employees array
 let employees = [];
+let id = 0;
+
 function inputEmployee (){
+
+id ++;
 
 inquirer
   .prompt([
@@ -97,7 +101,7 @@ inquirer
 
         employee_titleInput = res2.titleInput;
 
-        employees.push(`{name: ${employee_name}, title: ${employee_title}, titleInput: ${employee_titleInput}}`)
+        employees.push(`{name: ${employee_name}, title: ${employee_title}, titleInput: ${employee_titleInput}, id: ${id}}`)
         console.log(employees)
         // console.log(employee_name, employee_title, employee_titleInput);
     })
