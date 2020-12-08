@@ -5,10 +5,12 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve("/Users/LaurenHutchinson/Desktop/objectOrientedProgramming/Develop/output/");
+const OUTPUT_DIR = path.resolve(
+  "/Users/hutch/dev/Homeworks/objectOrientedProgramming/Develop/"
+);
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-console.log("output path: " + outputPath)
+console.log("output path: " + outputPath);
 
 const render = require("./lib/htmlRenderer");
 
@@ -16,140 +18,141 @@ const render = require("./lib/htmlRenderer");
 let employees = [];
 let id = 0;
 
-function inputEmployee (){
+function inputEmployee() {
+  id++;
 
-id ++;
-
-inquirer
-  .prompt([
-    {
-      type: "input",
-      message: "what is your name?",
-      name: "nameInput",
-    },
-    {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "what is your name?",
+        name: "nameInput",
+      },
+      {
         type: "input",
         message: "what is your email?",
         name: "emailInput",
       },
-    {
-      type: "list",
-      message: "choose a job title",
-      name: "jobTitleInput",
-      choices: [
-        "engineer",
-        "manager",
-        "intern",
-      ],
-    },
+      {
+        type: "list",
+        message: "choose a job title",
+        name: "jobTitleInput",
+        choices: ["engineer", "manager", "intern"],
+      },
+    ])
+    .then((res) => {
+      console.log(res);
 
-  ])
-  .then((res) => {
-    console.log(res);
+      let titleQuestion = "";
 
-    let titleQuestion = "";
+      let employee_name = "";
+      let employee_title = "";
+      let employee_titleInput = "";
+      let employee_email = "";
 
-    let employee_name = "";
-    let employee_title = "";
-    let employee_titleInput = "";
-    let employee_email= "";
-
-    if (res.jobTitleInput === "engineer"){
+      if (res.jobTitleInput === "engineer") {
         titleQuestion = "what is your github profile?";
         employee_name = res.nameInput;
         employee_title = res.jobTitleInput;
         employee_email = res.emailInput;
-
-
-    } else if (res.jobTitleInput === "manager"){
+      } else if (res.jobTitleInput === "manager") {
         titleQuestion = "what is your  office number?";
         employee_name = res.nameInput;
         employee_title = res.jobTitleInput;
         employee_email = res.emailInput;
-
-
-    } else if (res.jobTitleInput === "intern"){
+      } else if (res.jobTitleInput === "intern") {
         titleQuestion = "what is your school?";
         employee_name = res.nameInput;
         employee_title = res.jobTitleInput;
         employee_email = res.emailInput;
+      }
 
-    };
-
-    inquirer
+      inquirer
         .prompt([
-            {
-                name: "titleInput",
-                type: "input",
-                message: titleQuestion
-            }
+          {
+            name: "titleInput",
+            type: "input",
+            message: titleQuestion,
+          },
         ])
-    .then((res2) => {
-        console.log(res2);
+        .then((res2) => {
+          console.log(res2);
 
-        employee_titleInput = res2.titleInput;
+          employee_titleInput = res2.titleInput;
 
-
-        switch (employee_title) {
+          switch (employee_title) {
             case "engineer":
-                employee = new Engineer (employee_name, id, employee_email, employee_titleInput)
-                break;
+              employee = new Engineer(
+                employee_name,
+                id,
+                employee_email,
+                employee_titleInput
+              );
+              break;
             case "manager":
-                employee = new Manager (employee_name, id, employee_email, employee_titleInput)
-                break;
+              employee = new Manager(
+                employee_name,
+                id,
+                employee_email,
+                employee_titleInput
+              );
+              break;
             case "intern":
-                employee = new Intern (employee_name, id, employee_email, employee_titleInput)
-                break;
+              employee = new Intern(
+                employee_name,
+                id,
+                employee_email,
+                employee_titleInput
+              );
+              break;
             default:
-                break;
-        }
-        employees.push(employee)
-        console.log(employees)
-        // console.log(employee_name, employee_title, employee_titleInput);
-    })
-    .then((ask) =>{
-        askAgain();
-        }).then((writeFile) => {
-            console.log(writeFile);
-            if (writeFile) {
-                if (writeFile.confirmEmployee=== false){
-                fs.writeFile(outputPath, "main.html", render(employees), (err) =>
-                err ? console.error(err) : console.log("Success!")
-                    ); 
-                };
-            }
+              break;
+          }
+          employees.push(employee);
+          console.log(employees);
+          // console.log(employee_name, employee_title, employee_titleInput);
         })
-
-});
+        .then((ask) => {
+          askAgain();
+        })
+        .then((writeFile) => {
+          console.log(writeFile);
+          if (writeFile) {
+            if (writeFile.confirmEmployee === false) {
+              fs.writeFile(outputPath, "main.html", render(employees), (err) =>
+                err ? console.error(err) : console.log("Success!")
+              );
+            }
+          }
+        });
+    });
 }
-function writeTeamFile(employees){
-    fs.writeFile(outputPath, render(employees), (err) =>
+function writeTeamFile(employees) {
+  fs.writeFile(outputPath, render(employees), (err) =>
     err ? console.error(err) : console.log("Success!")
-        );
-    
-    }
+  );
+}
 //add more employees
-function askAgain (){
-
-    inquirer
+function askAgain() {
+  inquirer
     .prompt([
-        {
+      {
         type: "confirm",
         message: "add more employees?",
         name: "confirmEmployee",
-        default: true
-        }])
-        .then((res3) => {
-            console.log(res3)
-            if (res3.confirmEmployee === true){
-                inputEmployee();
-            } else {
-                writeTeamFile(employees)
-                return "done";
-            }
-        })
-
-    }
+        default: true,
+      },
+    ])
+    .then((res3) => {
+      console.log(res3);
+      if (res3.confirmEmployee === true) {
+        inputEmployee();
+      } else {
+        writeTeamFile(employees);
+        return "done";
+      }
+    });
+}
 
 inputEmployee();
 
