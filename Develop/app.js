@@ -56,19 +56,30 @@ inquirer
   .then((res) => {
     console.log(res);
 
-    //employee array
-    let employees = []
+    //employees array
+    let employees = [];
     let titleQuestion = "";
+
+    let employee_name = "";
+    let employee_title = "";
+    let employee_titleInput = "";
 
     if (res.jobTitleInput === "engineer"){
         titleQuestion = "what is your github profile?";
-        employees.push(res.jobTitleInput);
+        employee_name = res.nameInput;
+        employee_title = res.jobTitleInput;
+
+
     } else if (res.jobTitleInput === "manager"){
         titleQuestion = "what is your  office number?";
-         employees.push(res.jobTitleInput);
+        employee_name = res.nameInput;
+        employee_title = res.jobTitleInput;
+
     } else if (res.jobTitleInput === "intern"){
         titleQuestion = "what is your school?";
-    employees.push(res.jobTitleInput)}
+        employee_name = res.nameInput;
+        employee_title = res.jobTitleInput;
+    };
 
     inquirer
         .prompt([
@@ -80,13 +91,20 @@ inquirer
         ])
     .then((res2) => {
         console.log(res2);
+
+        employee_titleInput = res2.titleInput;
+
+        employees.push(`{name: ${employee_name}, title: ${employee_title}, titleInput: ${employee_titleInput}}`)
+        console.log(employees)
+        // console.log(employee_name, employee_title, employee_titleInput);
     });
 
-    console.log(employees)
 
 
 
-//     fs.writeFile("main.html", html, (err) =>
-//       err ? console.error(err) : console.log("Success!")
-//     );
-  });
+
+    // fs.writeFile("main.html", html, (err) =>
+    //   err ? console.error(err) : console.log("Success!")
+    // );
+
+});
