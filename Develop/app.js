@@ -51,6 +51,11 @@ inquirer
       name: "nameInput",
     },
     {
+        type: "input",
+        message: "what is your email?",
+        name: "emailInput",
+      },
+    {
       type: "list",
       message: "choose a job title",
       name: "jobTitleInput",
@@ -70,22 +75,28 @@ inquirer
     let employee_name = "";
     let employee_title = "";
     let employee_titleInput = "";
+    let employee_email= "";
 
     if (res.jobTitleInput === "engineer"){
         titleQuestion = "what is your github profile?";
         employee_name = res.nameInput;
         employee_title = res.jobTitleInput;
+        employee_email = res.emailInput;
 
 
     } else if (res.jobTitleInput === "manager"){
         titleQuestion = "what is your  office number?";
         employee_name = res.nameInput;
         employee_title = res.jobTitleInput;
+        employee_email = res.emailInput;
+
 
     } else if (res.jobTitleInput === "intern"){
         titleQuestion = "what is your school?";
         employee_name = res.nameInput;
         employee_title = res.jobTitleInput;
+        employee_email = res.emailInput;
+
     };
 
     inquirer
@@ -101,7 +112,21 @@ inquirer
 
         employee_titleInput = res2.titleInput;
 
-        employees.push(`{name: ${employee_name}, title: ${employee_title}, titleInput: ${employee_titleInput}, id: ${id}}`)
+
+        switch (employee_title) {
+            case "engineer":
+                employee = new Engineer (employee_name, id, employee_email, employee_titleInput)
+                break;
+            case "manager":
+                employee = new Manager (employee_name, id, employee_email, employee_titleInput)
+                break;
+            case "intern":
+                employee = new Intern (employee_name, id, employee_email, employee_titleInput)
+                break;
+            default:
+                break;
+        }
+        employees.push(employee)
         console.log(employees)
         // console.log(employee_name, employee_title, employee_titleInput);
     })
