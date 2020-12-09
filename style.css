@@ -1,0 +1,21 @@
+body {
+  background-color: black;
+  font-family: "Bebas Neue", cursive;
+}
+
+.jumbotron {
+  background-color: rgba(252, 4, 4, 0.918);
+}
+
+#titleCrew {
+  font-size: 70px;
+}
+
+div.card.employee-card {
+  margin: 10px;
+  box-shadow: 5px 10px #888888;
+}
+
+div.card-header {
+  background-color: darkgrey;
+}
